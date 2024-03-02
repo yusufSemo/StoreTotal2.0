@@ -66,7 +66,7 @@ public class Main {
 
         System.out.println("PDF created");
         document.close();
-
+        new JTableExamples();
 
     }
 }
