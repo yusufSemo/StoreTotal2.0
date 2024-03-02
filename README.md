@@ -1,2 +1,2 @@
-#Store Total
+# Store Total
 store financial manager
