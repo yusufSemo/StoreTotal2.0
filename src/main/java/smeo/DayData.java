@@ -1,33 +1,37 @@
 package smeo;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class DayData {
-    private Date myDate;
-    private float cash;
-    private float card;
-    private float online;
-    private float total;
+    private LocalDate MyDate;
+    private float Cash;
+    private float Card;
+    private float Online;
+    private float Total;
 
-    public DayData(int month, int day, int year, float card, float online, float cash) {
-        // Constructor that creates a date with cash, card, online data
-        this.myDate = createDate(year, month, day);
-        this.cash = cash;
-        this.card = card;
-        this.online = online;
-        this.total = cash + card + online;
+    public DayData(int month, int day, int year, float card, float online, float cash){
+        //constructor that creates a date with cash,card,online data
+        this.MyDate = LocalDate.of(year, month, day);
+        this.Cash = cash;
+        this.Card = card;
+        this.Online = online;
+        this.Total = cash+card+online;
+    }
+    @Override
+    public String toString() {
+        // Format the date to MM/DD/YYYY
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        String formattedDate = MyDate.format(formatter);
+
+        // Return data with the formatted date
+        return (formattedDate + "\nCard-" + this.Card + "\nOnline-" + this.Online
+                + "\nCash-" + this.Cash + "\nTotal-" + this.Total);
+    }
+    public String getDate(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        String formattedDate = MyDate.format(formatter);
+        return formattedDate;
     }
 
-    private Date createDate(int year, int month, int day) {
-        java.util.Calendar calendar = java.util.Calendar.getInstance();
-        calendar.set(year, month - 1, day); // Note: month is zero-based in Calendar
-        return calendar.getTime();
-    }
-
-    public String getData() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-        return (dateFormat.format(this.myDate) + "\nCard-" + this.card + "\nOnline-" + this.online +
-                "\nCash-" + this.cash + "\nTotal-" + this.total);
-    }
 }

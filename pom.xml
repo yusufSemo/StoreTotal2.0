@@ -42,6 +42,11 @@
             <artifactId>flatlaf-intellij-themes</artifactId>
             <version>3.4</version>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.16.1</version> <!-- Make sure to use the latest version -->
+        </dependency>
     </dependencies>
 
 </project>

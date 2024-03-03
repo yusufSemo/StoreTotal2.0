@@ -16,6 +16,14 @@ import java.net.MalformedURLException;
 public class Main {
     public static void main(String[] args) throws FileNotFoundException, MalformedURLException {
         String path = "/Users/yusufsemo/Desktop/mypdf.pdf";
+        DayData day = new DayData(2,1,2022,100,100,100);
+        System.out.println(day);
+
+        String test = day.getDate();
+        String[] result = test.split("/");
+        for (String part : result) {
+            System.out.println(part+ "  ");
+        }
 
         //create an image
 //        String imgPath = "images/birds.jpeg";

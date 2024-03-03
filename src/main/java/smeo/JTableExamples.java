@@ -3,6 +3,11 @@ import com.formdev.flatlaf.FlatDarkLaf;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 
 public class JTableExamples {
     // Frame
@@ -10,28 +15,33 @@ public class JTableExamples {
 
     // Components
     JLabel titleLabel;
-    JTextField inputField1;
+    JTextField inputDate;
     JTextField inputField2;
     JTextField inputField3;
     JTextField inputField4;
     JTable mainTable;
-    JButton button1;
-    JButton button2;
+    JButton lastMonth;
+    JButton nextMonth;
 
     // Constructor
     JTableExamples() {
-        FlatDarkLaf.install();
+        FlatDarkLaf.setup();
 
         // Frame initialization
         mainFrame = new JFrame();
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        LocalDate currentDate = LocalDate.now();
+        Month currentMonth = currentDate.getMonth();
+        currentDate = LocalDate.now();
+        int currentYear = currentDate.getYear();
+
         mainFrame.setTitle("Store Total");
 
         // Set layout manager to BoxLayout with Y_AXIS orientation
         mainFrame.setLayout(new BoxLayout(mainFrame.getContentPane(), BoxLayout.Y_AXIS));
 
         // Title at the top
-        titleLabel = new JLabel("Store Total");
+        titleLabel = new JLabel("Store Total "+ currentMonth + " " + currentYear);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
 
         JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -39,13 +49,14 @@ public class JTableExamples {
         mainFrame.add(titlePanel);
 
         // Inputs in the second row
-        JPanel inputsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 5));
-        inputField1 = new JTextField(5);
-        inputField2 = new JTextField(5);
-        inputField3 = new JTextField(5);
-        inputField4 = new JTextField(5);
+        JPanel inputsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 5));
+        inputDate = new JTextField(7);
+        inputDate.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
+        inputField2 = new JTextField(7);
+        inputField3 = new JTextField(7);
+        inputField4 = new JTextField(7);
         JButton submitButton = new JButton("Submit");
-        inputsPanel.add(inputField1);
+        inputsPanel.add(inputDate);
         inputsPanel.add(inputField2);
         inputsPanel.add(inputField3);
         inputsPanel.add(inputField4);
@@ -103,17 +114,55 @@ public class JTableExamples {
 
         // Buttons in the fourth row
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
-        button1 = new JButton("Button 1");
-        button2 = new JButton("Button 2");
-        buttonPanel.add(button1);
-        buttonPanel.add(button2);
+        lastMonth = new JButton("Last Month");
+        nextMonth = new JButton("Next Month");
+        buttonPanel.add(lastMonth);
+        buttonPanel.add(nextMonth);
         mainFrame.add(buttonPanel);
 
         // Frame Size
-        mainFrame.setSize(800, 600);
+        mainFrame.setSize(800, 700);
         // Frame Visible = true
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setVisible(true);
+
+        //event listeners
+        lastMonth.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                System.out.println("Last Month button clicked!");
+            }
+        });
+        nextMonth.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                System.out.println("next Month button clicked!");
+            }
+        });
+
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Handle the submit button click
+                handleButtonClick();
+            }
+        });
+        String filePath = "/Users/yusufsemo/Desktop/testing/test.json";
+    }
+    private void handleButtonClick() {
+        // Get values from text fields
+        String dateValue = inputDate.getText();
+        String field2Value = inputField2.getText();
+        String field3Value = inputField3.getText();
+        String field4Value = inputField4.getText();
+
+        // Print the values (you can replace this with your desired action)
+        System.out.println("Date: " + dateValue);
+        System.out.println("Field 2: " + field2Value);
+        System.out.println("Field 3: " + field3Value);
+        System.out.println("Field 4: " + field4Value);
     }
 
     // Driver method
