@@ -21,6 +21,9 @@ Store Total is a Java Swing GUI application designed to assist store owners in m
 - **Java:** The application is developed in Java, providing cross-platform compatibility.
 
 - **Apache Maven:** Maven is used for project management and build automation.
+## Development Status
+
+⚠️ **Note:** This project is currently under development, and some features may be incomplete or subject to change.
 
 ## How to Use
 
