@@ -21,6 +21,7 @@ public class JTableExamples {
     JTextField inputField4;
     JTable mainTable;
     JButton lastMonth;
+    JButton createPDF;
     JButton nextMonth;
 
     // Constructor
@@ -115,8 +116,10 @@ public class JTableExamples {
         // Buttons in the fourth row
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
         lastMonth = new JButton("Last Month");
+        createPDF = new JButton("save PDF to Desktop");
         nextMonth = new JButton("Next Month");
         buttonPanel.add(lastMonth);
+        buttonPanel.add(createPDF);
         buttonPanel.add(nextMonth);
         mainFrame.add(buttonPanel);
 
@@ -125,6 +128,11 @@ public class JTableExamples {
         // Frame Visible = true
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setVisible(true);
+
+
+
+
+
 
         //event listeners
         lastMonth.addActionListener(new ActionListener() {
