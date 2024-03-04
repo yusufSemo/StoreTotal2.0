@@ -14,15 +14,23 @@ import java.io.FileNotFoundException;
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         String path = "/Users/yusufsemo/Desktop/pdf.pdf";
+
+        MonthData mon = new MonthData(1,2002);
+        System.out.println(mon.toJson());
+
         DayData day = new DayData(2,1,2022,100,100,100);
         System.out.println(day);
-        day.toJsonFile();
+        //day.toJsonFile();
 
         DayData day1 = new DayData(2,2,2022,140,300,200);
-        day1.toJsonFile();
+        //day1.toJsonFile();
 
-        DayData day2 = new DayData(3,1,2022,140,140,1003);
+        DayData day2 = new DayData(3,1,2022,4440,140,1003);
         day2.toJsonFile();
+
+
+
+
 
         String test = day.getDate();
         String[] result = test.split("/");

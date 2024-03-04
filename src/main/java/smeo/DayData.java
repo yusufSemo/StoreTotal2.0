@@ -10,11 +10,11 @@ import java.util.Locale;
 
 public class DayData {
     private final LocalDate MyDate;
-    private final float Cash;
-    private final float Card;
-    private final float Online;
-    private final float Total;
-    private final String WeekDay;
+    private float Cash;
+    private float Card;
+    private float Online;
+    private float Total;
+    private String WeekDay;
 
     public DayData(int month, int day, int year, float card, float online, float cash){
         //constructor that creates a date with cash,card,online data
@@ -40,7 +40,10 @@ public class DayData {
     public String getDate(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         return MyDate.format(formatter);
-
+    }
+    public String DatetoString(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return MyDate.format(formatter);
     }
     public String getMonthAndYear() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMyyyy", Locale.ENGLISH);
@@ -60,6 +63,7 @@ public class DayData {
         File jsonFile = new File("/Users/yusufsemo/Desktop/jsonData/" + getMonthAndYear() + ".json");
             //BufferedWriter writer = new BufferedWriter(new FileWriter(jsonFile,true));
         boolean notExists = !jsonFile.exists();
+        boolean containsDuplicate = false;
         StringBuilder fileContent = new StringBuilder();
         if(!notExists) {
             try {
@@ -74,9 +78,22 @@ public class DayData {
                 bufferedReader.close();
                 fileReader.close();
                 System.out.println(fileContent);
+                System.out.println("subString 2987492874293 "+ DatetoString());
                 if (!fileContent.isEmpty()) {
-                    fileContent.deleteCharAt(fileContent.length() - 2);
-                    System.out.println(fileContent);
+                    if(fileContent.indexOf(DatetoString()) != -1){
+                        containsDuplicate = true;
+                        int startDate = fileContent.indexOf("{\n" + "\"MyDate\":\""+DatetoString());
+                        int endDate = startDate;
+
+                        while(fileContent.charAt(endDate) != '}'){
+                            endDate++;
+                        }
+                        fileContent.replace(startDate,endDate+1,String.valueOf(this.toJsonString()));
+
+                    }
+                    if(!containsDuplicate){
+                        fileContent.deleteCharAt(fileContent.length() - 2);
+                    }
 
                 }
             } catch (IOException e) {
@@ -87,14 +104,18 @@ public class DayData {
         try {
             FileWriter myWriter = new FileWriter(jsonFile);
             BufferedWriter writer = new BufferedWriter(myWriter);
-            if (notExists) {
-                writer.write("[\n");
-            }
-            if(!fileContent.toString().isEmpty()){
-                writer.write(fileContent +",");
-            }
-            writer.write(this.toJsonString() + "]");
+            if(!containsDuplicate) {
+                if (notExists) {
+                    writer.write("[\n");
+                }
+                if (!fileContent.toString().isEmpty()) {
+                    writer.write(fileContent + ",");
+                }
+                writer.write(this.toJsonString() + "]");
 
+            }else{
+                writer.write(fileContent.toString());
+            }
             writer.close();
             myWriter.close();
         } catch (IOException e) {
