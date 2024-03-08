@@ -18,14 +18,14 @@ public class Main {
         MonthData mon = new MonthData(1,2002);
         mon.toFile();
 
-        DayData day = new DayData(2,1,2022,100,100,100);
+        DayData day = new DayData(5,21,2022,100,100,100);
         System.out.println(day);
-        //day.toJsonFile();
+        day.toJsonFile();
 
-        DayData day1 = new DayData(2,2,2022,140,300,200);
-        //day1.toJsonFile();
+        DayData day1 = new DayData(5,19,2022,140,300,200);
+        day1.toJsonFile();
 
-        DayData day2 = new DayData(3,1,2022,4440,140,1003);
+        DayData day2 = new DayData(5,20,2022,40,1420,1003);
         day2.toJsonFile();
 
 

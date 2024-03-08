@@ -66,12 +66,15 @@ public class DayData {
     public void toJsonFile(){
         File jsonFile = new File("/Users/yusufsemo/Desktop/jsonData/" + getMonthAndYear() + ".json");
             //BufferedWriter writer = new BufferedWriter(new FileWriter(jsonFile,true));
-        boolean notExists = !jsonFile.exists();
+        boolean Exists = jsonFile.exists();
         boolean containsDuplicate = false;
         StringBuilder fileContent = new StringBuilder();
-        if(!notExists) {
-            MonthData month = new MonthData(Month,Year);
+        if(!Exists) {
+            System.out.println("BEFORE");
+            MonthData month = new MonthData(Month, Year);
             month.toFile();
+            System.out.println("AFTER");
+        }
             try {
                 FileReader fileReader = new FileReader(jsonFile);
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -83,47 +86,49 @@ public class DayData {
                 }
                 bufferedReader.close();
                 fileReader.close();
-                System.out.println(fileContent);
-                System.out.println("subString 2987492874293 "+ DatetoString());
-                if (!fileContent.isEmpty()) {
-                    if(fileContent.indexOf(DatetoString()) != -1){
-                        containsDuplicate = true;
-                        int startDate = fileContent.indexOf("{\n" + "\"MyDate\":\""+DatetoString());
-                        int endDate = startDate;
+                //we got the whole contents of the file hooray!
 
-                        while(fileContent.charAt(endDate) != '}'){
-                            endDate++;
-                        }
-                        fileContent.replace(startDate,endDate+1,String.valueOf(this.toJsonString()));
+                //System.out.println(fileContent);
+                //System.out.println("subString 2987492874293 "+ DatetoString());
+                System.out.print(DatetoString());
+                if (fileContent.indexOf(DatetoString()) != -1) {
+                    System.out.println(" FOUND THE MONTH");
+                    int startDate = fileContent.indexOf("{\n" + "\"MyDate\":\"" + DatetoString());
+                    int endDate = startDate+50;
 
+                    //add 50 to end date later to save time
+                    while (fileContent.charAt(endDate) != '}') {
+                        endDate++;
                     }
-                    if(!containsDuplicate){
-                        fileContent.deleteCharAt(fileContent.length() - 2);
-                    }
+                    fileContent.replace(startDate, endDate + 1, String.valueOf(this.toJsonString()));
 
                 }
+//                if (!containsDuplicate) {
+//                    fileContent.deleteCharAt(fileContent.length() - 2);
+//                }
+
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        }
 
 
-        System.out.println(fileContent);
         try {
             FileWriter myWriter = new FileWriter(jsonFile);
             BufferedWriter writer = new BufferedWriter(myWriter);
-            if(!containsDuplicate) {
-                if (notExists) {
-                    writer.write("[\n");
-                }
-                if (!fileContent.toString().isEmpty()) {
-                    writer.write(fileContent + ",");
-                }
-                writer.write(this.toJsonString() + "]");
-
-            }else{
-                writer.write(fileContent.toString());
-            }
+//            if(!containsDuplicate) {
+//                if (!Exists) {
+//                    writer.write("[\n");
+//                }
+//                if (!fileContent.toString().isEmpty()) {
+//                    writer.write(fileContent + ",");
+//                }
+//                writer.write(this.toJsonString() + "]");
+//
+//            }else{
+//                writer.write(fileContent.toString());
+//            }
+            writer.write(fileContent.toString());
             writer.close();
             myWriter.close();
         } catch (IOException e) {

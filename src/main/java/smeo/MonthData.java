@@ -55,7 +55,7 @@ public class MonthData {
         StringBuilder returnString = new StringBuilder("[");
         int dayNum = getDayNumber(Year, MonthIdx, 1);
 
-        for (int i = 0; i < DaysInMonth; i++) {
+        for (int i = 0; i < DaysInMonth-1; i++) {
             returnString.append("\n" + "{\n" + "\"MyDate\":\"2022-").append(String.format("%02d", MonthIdx)).append("-").append(String.format("%02d", (i + 1))).append("\",\n").append("\"Cash\":0.0,\n").append(  // Placeholder for Cash
                     "\"Card\":0.0,\n").append(  // Placeholder for Card
                     "\"Online\":0.0,\n").append(  // Placeholder for Online
@@ -63,6 +63,11 @@ public class MonthData {
                     "\"WeekDay\":\"").append(getDayOfWeek(dayNum)).append("\"\n").append("},");
             dayNum++;
         }
+        returnString.append("\n" + "{\n" + "\"MyDate\":\"2022-").append(String.format("%02d", MonthIdx)).append("-").append(String.format("%02d", (DaysInMonth))).append("\",\n").append("\"Cash\":0.0,\n").append(  // Placeholder for Cash
+                "\"Card\":0.0,\n").append(  // Placeholder for Card
+                "\"Online\":0.0,\n").append(  // Placeholder for Online
+                "\"Total\":0.0,\n").append(  // Placeholder for Total
+                "\"WeekDay\":\"").append(getDayOfWeek(dayNum)).append("\"\n").append("}");
         returnString.append("]");
 
         return returnString.toString();
