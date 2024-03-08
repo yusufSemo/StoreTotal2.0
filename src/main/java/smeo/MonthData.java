@@ -1,20 +1,27 @@
 package smeo;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 
 public class MonthData {
     private final int DaysInMonth;
     private final int MonthIdx;
     private final int Year;
-
+    private LocalDate MyDate;
     public MonthData(int monthIdx, int year){
         YearMonth yearMonthObject = YearMonth.of(year, monthIdx);
         this.MonthIdx = monthIdx;
         this.Year = year;
         this.DaysInMonth = yearMonthObject.lengthOfMonth();
+        this.MyDate = LocalDate.of(Year, MonthIdx, 1);
     }
     public static String getDayOfWeek(int dayNumber) {
         dayNumber = (dayNumber%7)+1;
@@ -61,4 +68,28 @@ public class MonthData {
         return returnString.toString();
     }
 
+    public String getMonthAndYear() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMyyyy", Locale.ENGLISH);
+        return MyDate.format(formatter);
+    }
+    public void toFile(){
+        String FileContent = this.toJson();
+        File jsonFile = new File("/Users/yusufsemo/Desktop/jsonData/" + getMonthAndYear() + ".json");
+        //check if the file already exists, if it does, do nothing.
+        boolean FileExists = jsonFile.exists();
+        if(FileExists) return;
+        try {
+            FileWriter myWriter = new FileWriter(jsonFile);
+            BufferedWriter writer = new BufferedWriter(myWriter);
+            writer.write(toJson());
+            writer.close();
+            myWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
 }
+//writer.close();
+//        myWriter.close();

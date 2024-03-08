@@ -15,9 +15,13 @@ public class DayData {
     private float Online;
     private float Total;
     private String WeekDay;
+    private int Month;
+    private int Year;
 
     public DayData(int month, int day, int year, float card, float online, float cash){
         //constructor that creates a date with cash,card,online data
+        this.Month = month;
+        this.Year = year;
         this.MyDate = LocalDate.of(year, month, day);
         this.Cash = cash;
         this.Card = card;
@@ -66,6 +70,8 @@ public class DayData {
         boolean containsDuplicate = false;
         StringBuilder fileContent = new StringBuilder();
         if(!notExists) {
+            MonthData month = new MonthData(Month,Year);
+            month.toFile();
             try {
                 FileReader fileReader = new FileReader(jsonFile);
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -100,6 +106,8 @@ public class DayData {
                 throw new RuntimeException(e);
             }
         }
+
+
         System.out.println(fileContent);
         try {
             FileWriter myWriter = new FileWriter(jsonFile);

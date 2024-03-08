@@ -16,7 +16,7 @@ public class Main {
         String path = "/Users/yusufsemo/Desktop/pdf.pdf";
 
         MonthData mon = new MonthData(1,2002);
-        System.out.println(mon.toJson());
+        mon.toFile();
 
         DayData day = new DayData(2,1,2022,100,100,100);
         System.out.println(day);
